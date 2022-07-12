@@ -4,11 +4,18 @@
     "module": "esnext",
     "baseUrl": "./",
     "moduleResolution": "node",
+    "jsx":"preserve",
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "components/*": [
+        "src/components/*"
       ]
     },
+    // "include": [
+    //   "./src/**/*"
+    // ],
     "lib": [
       "esnext",
       "dom",
