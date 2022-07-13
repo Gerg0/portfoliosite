@@ -51,7 +51,7 @@ export default {
   height: 100%; /* 100% Full-height */
   width: auto; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
-  z-index: 1; /* Stay on top */
+  z-index: 2; /* Stay on top */
   top: 0;
   left: 0;
   

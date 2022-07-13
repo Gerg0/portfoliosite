@@ -9,7 +9,7 @@
     <div class="item text">
         {{ Class.text }}
         <div v-if="Class.isTimeline">
-            <TimeLine/>
+            <TimeLine :timeLineData="Class.timeLineData"/>
         </div>
     </div>
     <div class="item one rounded-circle"><img :src="getImgUrl(Class.icon)" class=""/></div>
@@ -20,7 +20,7 @@
 <script>
 import TimeLine from "./TimeLine"
 export default {
- name: "ProfileCard",
+ name: "CardItem",
  components: { TimeLine },
  props:{
     Class:{}
@@ -44,7 +44,7 @@ export default {
     padding: 10px;
     overflow:hidden;
     /* border-radius: 90px; */
-    max-width:100%;
+    max-width:600px;
     margin:auto;
 }
 
@@ -81,6 +81,5 @@ export default {
     grid-area: 3 / 1 / 4 / 4;
     margin:2rem;
     color:#1c1d25;
-
 }
 </style>

@@ -41,7 +41,13 @@ body{
   max-height: 100%;
   margin:0;
   top: 0;
-  background-color: navy ;
-  color: navy ;
+  background-color: #1c1d25;
+
+  /* background-color: navy ;
+  color: navy ; */
+}
+
+.inline-block{
+  display: inline-block;
 }
 </style>
