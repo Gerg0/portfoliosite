@@ -22,7 +22,9 @@
             </div>
 
         </div>
-        <div id="contact" class="footer-area grid-item">footer</div>
+        <div id="contact" class="footer-area grid-item">
+            <ContactForm/>
+        </div>
 
     </div>
 
@@ -35,13 +37,15 @@
 import SideBar from "./SideBar";
 import IntroPage from "./IntroPage";
 import CardItem from "./CardItem";
+import ContactForm from "./ContactForm";
 
 export default {
     name: 'MainPage',
     components: {
         IntroPage,
         SideBar,
-        CardItem
+        CardItem,
+        ContactForm
     },
     methods: {
         scrollToElement(elementName) {
