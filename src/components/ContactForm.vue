@@ -47,7 +47,6 @@
 // import emailjs from '@emailjs/browser';
 import emailjs from 'emailjs-com';
 import { ref } from 'vue';
-import config from '@/config.json';
 import PopupMessage from '@/components/PopupMessage.vue'
 import CardItem from "@/components/CardItem.vue";
 const popupTrigger = ref(false)
@@ -76,7 +75,7 @@ const sendEmail = (e) => {
     form.value.error_message = "";
     form.value.user_message = "";
 
-    emailjs.sendForm(config.service_id, config.template_name, e.target, config.public_key, {
+    emailjs.sendForm(import.meta.env.VITE_EMAILJS_SERVICE_ID, import.meta.env.VITE_EMAILJS_TEMPLATE_NAME, e.target, import.meta.env.VITE_EMAILJS_PUBLIC_KEY, {
         from_name: form.value.from_name,
         from_email: form.value.from_email,
         message: form.value.message
