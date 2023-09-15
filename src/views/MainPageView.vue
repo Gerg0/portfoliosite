@@ -63,7 +63,9 @@ import SideBar from "@/components/Layout/SideBar.vue";
 import CardItem from "@/components/CardItem.vue";
 import ContactForm from "@/components/ContactForm.vue";
 import { onMounted, ref } from 'vue';
-import supabase from "../data/supabaseClient"
+import axios from 'axios'
+
+// import supabase from "../data/supabaseClient"
 
 
 
@@ -80,19 +82,18 @@ onMounted(()=>{
 })
 
 const fetchCardData = async () =>{
-
-    const {data, error, status} = await supabase
-        .from("SiteContent")
-        .select(`*, TimelineData (*) `);
-
-    if (error && status !== 406) throw error;
-
-    if(data){
-        introductions.value = data.filter(obj => obj.contentType == "introduction");
-        experiences.value = data.filter(obj => obj.contentType == "experience");
-        educations.value = data.filter(obj => obj.contentType == "education");
-        projects.value = data.filter(obj => obj.contentType == "project");
-    }
+    axios(`${import.meta.env.VITE_BACKEND_API_URL}/getsitedata`).then((result) => {
+        if (result.error && result.status !== 406) throw result.error;
+        
+        if(result.data){
+            introductions.value = result.data.filter(obj => obj.contentType == "introduction");
+            experiences.value = result.data.filter(obj => obj.contentType == "experience");
+            educations.value = result.data.filter(obj => obj.contentType == "education");
+            projects.value = result.data.filter(obj => obj.contentType == "project");
+            }
+        }, (error) => {
+            console.log(error);
+    });
 }
 
 

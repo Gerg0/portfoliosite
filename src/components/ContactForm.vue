@@ -45,7 +45,7 @@
 </template>
 <script setup>
 // import emailjs from '@emailjs/browser';
-import emailjs from 'emailjs-com';
+import axios from 'axios'
 import { ref } from 'vue';
 import PopupMessage from '@/components/PopupMessage.vue'
 import CardItem from "@/components/CardItem.vue";
@@ -68,28 +68,16 @@ const reset = () => {
         form.value.from_email = "",
         form.value.message = ""
 }
-
-
-
-const sendEmail = (e) => {
-    form.value.error_message = "";
+const sendEmail = () => {
+    
     form.value.user_message = "";
-
-    emailjs.sendForm(import.meta.env.VITE_EMAILJS_SERVICE_ID, import.meta.env.VITE_EMAILJS_TEMPLATE_NAME, e.target, import.meta.env.VITE_EMAILJS_PUBLIC_KEY, {
-        from_name: form.value.from_name,
-        from_email: form.value.from_email,
-        message: form.value.message
-    })
-        .then((result) => {
-            console.log('SUCCESS!', result.text);
+    axios(`${import.meta.env.VITE_BACKEND_API_URL}/sendemail?fromname=${form.value.from_name}&fromemail=${form.value.from_email}&message=${form.value.message}`).then((result) => {
             reset();
             form.value.user_message = "Üzenet sikeresen elküldve!";
             togglePopup();
-            console.log(form.value.user_message);
 
         }, (error) => {
-            console.log('FAILED...', error.text);
-            form.value.error_message = "Valami hiba történt!";
+            form.value.user_message = "Valami hiba történt!";
             togglePopup();
         });
 }
