@@ -8,7 +8,13 @@ const app = express()
 const port = 3000
 
 app.get('/sendemail', (request, response) => {
-    response.set('Access-Control-Allow-Origin','*')
+  response.setHeader('Access-Control-Allow-Credentials', true);
+  response.setHeader('Access-Control-Allow-Origin', '*');
+  response.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  response.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  );
     let templateParams = {
         from_name: request.query.fromname,
         from_email: request.query.fromemail,
@@ -35,7 +41,13 @@ app.get('/sendemail', (request, response) => {
 })
 
 app.get('/getsitedata', async (request, response) => {
-    response.set('Access-Control-Allow-Origin','*')
+  response.setHeader('Access-Control-Allow-Credentials', true);
+  response.setHeader('Access-Control-Allow-Origin', '*');
+  response.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  response.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  );
     const {data, error, status} = await supabase
         .from("SiteContent")
         .select(`*, TimelineData (*) `);
