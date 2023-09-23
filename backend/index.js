@@ -7,7 +7,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-app.get('/sendemail', (request, response) => {
+app.get('/api/sendemail', (request, response) => {
   response.setHeader('Access-Control-Allow-Credentials', true);
   response.setHeader('Access-Control-Allow-Origin', '*');
   response.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -40,7 +40,7 @@ app.get('/sendemail', (request, response) => {
       }
 })
 
-app.get('/getsitedata', async (request, response) => {
+app.get('/api/getsitedata', async (request, response) => {
   response.setHeader('Access-Control-Allow-Credentials', true);
   response.setHeader('Access-Control-Allow-Origin', '*');
   response.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
