@@ -71,7 +71,7 @@ const reset = () => {
 const sendEmail = () => {
     
     form.value.user_message = "";
-    axios(`${import.meta.env.VITE_BACKEND_API_URL}/sendemail?fromname=${form.value.from_name}&fromemail=${form.value.from_email}&message=${form.value.message}`).then((result) => {
+    axios(`${import.meta.env.VITE_BACKEND_API_URL}/api/sendemail?fromname=${form.value.from_name}&fromemail=${form.value.from_email}&message=${form.value.message}`).then((result) => {
             reset();
             form.value.user_message = "Üzenet sikeresen elküldve!";
             togglePopup();

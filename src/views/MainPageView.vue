@@ -82,7 +82,7 @@ onMounted(()=>{
 })
 
 const fetchCardData = async () =>{
-    axios(`${import.meta.env.VITE_BACKEND_API_URL}/getsitedata`).then((result) => {
+    axios(`${import.meta.env.VITE_BACKEND_API_URL}/api/getsitedata`).then((result) => {
         if (result.error && result.status !== 406) throw result.error;
         
         if(result.data){
