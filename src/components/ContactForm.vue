@@ -44,7 +44,7 @@
     </div>
 </template>
 <script setup>
-// import emailjs from '@emailjs/browser';
+
 import axios from 'axios'
 import { ref } from 'vue';
 import PopupMessage from '@/components/PopupMessage.vue'
@@ -124,12 +124,10 @@ input[type=submit]:hover {
 .container {
     border-radius: 5px;
     padding: 20px;
-    /* max-width: 50%; */
     display: flex;
     flex: 1 1 0px;
     flex-direction: row;
     justify-content: space-between;
-    /*  */
     margin: auto;
 }
 

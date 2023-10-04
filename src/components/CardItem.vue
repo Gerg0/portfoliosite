@@ -2,12 +2,8 @@
 <div class="grid-card">
 
     <div class="item two">
-        <!-- <div class="grid-content">
-            <div class="item text">Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!</div>
-        </div> -->
     </div>
     <div class="item text">
-        <!-- {{ Model.text }} -->
         <div v-if="Model.title" class="title">
             <h3>{{Model.title}}</h3>
         </div>
@@ -33,8 +29,6 @@ const props = defineProps({
 })
 
 const getImgUrl = (icon) => {
-    // let images = require.context('../assets/', false);
-    // return images('./' + icon);
     return './'+icon;
   }
 
@@ -49,9 +43,7 @@ const getImgUrl = (icon) => {
     grid-template-rows: 1fr 1fr minmax(30px, auto);
     padding: 10px;
     overflow:hidden;
-    /* border-radius: 90px; */
     max-width:600px;
-    /* margin:auto; */
     align-self: start;
 }
 

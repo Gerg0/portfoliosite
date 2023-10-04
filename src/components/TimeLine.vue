@@ -1,25 +1,14 @@
 <template>
     <div class="timeline-container">
-        <!-- <ul>
-            <li v-for="(item, index) in timeLineData" :key="index"> {{item.date}} -> {{item.text}}</li>
-        </ul> -->
         <ul class="bar">
             <li class="timeline-container-item" v-for="(item, index) in timeLineData" :key="index">
-
-                <!-- <div class="timeline-container-item"> -->
-                    <!-- <div class="timeline-container-item"> -->
-                        <!-- <div class="dot"></div> -->
-                        <div class="text-item">
-                            <div class="date">{{item.date}}</div>
-                            <div class="text">{{ item.text }}</div>
-                        </div>
-                    <!-- </div> -->
-                <!-- </div> -->
+                <div class="text-item">
+                    <div class="date">{{item.date}}</div>
+                    <div class="text">{{ item.text }}</div>
+                </div>
             </li>
         </ul>
-
     </div>
-
 </template>
 
 <script setup>
@@ -77,40 +66,13 @@ const props = defineProps({
 
 }
 
-/* .timeline-container::after {
-    content: '';
-    position: absolute;
-    --widthLine: 0.25em;
-    width: var(--widthLine);
-    background-color: #FF9F55;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    margin-left: calc(1em/2);
-    height: 100%;
-} */
 
 .timeline-container-item {
     padding: 10px 40px;
     position: relative;
     background-color: inherit;
-    /* width: 50%; */
 }
 
-/* The circles on the timeline */
-/* .timeline-container-item::before {
-    content: '';
-    position: absolute;
-    --widthDot: 1em;
-    width: var(--widthDot);
-    height: var(--widthDot);
-    left: 0;
-    background-color: white;
-    border: 4px solid #FF9F55;
-    top: calc(50% - var(--widthDot)/2);
-    border-radius: 50%;
-    z-index: 1;
-} */
 
 .text-item {
     font-size: 1em;
