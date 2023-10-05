@@ -81,7 +81,7 @@ const startY = ref(0);
 onMounted(()=>{
     isOpen.value = false;
     fetchCardData();
-    window.addEventListener('wheel', mainPageScrolling);
+    // window.addEventListener('wheel', mainPageScrolling);
 })
 
 const fetchCardData = async () =>{
@@ -123,49 +123,49 @@ const scrollToElement = (elementName) => {
 };
 
 
-const mainPageScrolling = (e) => {
-    console.log("ok");
-    e.stopPropagation();
-    if (isScrolling.value) {
-        return;
-    }
-    isScrolling.value = true;
+// const mainPageScrolling = (e) => {
+//     console.log("ok");
+//     e.stopPropagation();
+//     if (isScrolling.value) {
+//         return;
+//     }
+//     isScrolling.value = true;
 
-      let scrollY = window.scrollY
-      if (scrollY > startY.value) {
-        direction.value = 'down';
-      } else {
-        direction.value = 'up';
-      }
-      startY.value = scrollY;
+//       let scrollY = window.scrollY
+//       if (scrollY > startY.value) {
+//         direction.value = 'down';
+//       } else {
+//         direction.value = 'up';
+//       }
+//       startY.value = scrollY;
 
-    let a= document.getElementsByClassName('anchor-link');
-    let nextElementIndex;
-    for(let i = 0 ; i < a.length ; i++) {
+//     let a= document.getElementsByClassName('anchor-link');
+//     let nextElementIndex;
+//     for(let i = 0 ; i < a.length ; i++) {
         
 
-        if(a[i].id == currentScrollElementId.value)
-        {
-            if (direction.value == "down") nextElementIndex = i+1;
-            else nextElementIndex = i-1;
+//         if(a[i].id == currentScrollElementId.value)
+//         {
+//             if (direction.value == "down") nextElementIndex = i+1;
+//             else nextElementIndex = i-1;
             
-        }
-    }
+//         }
+//     }
 
     
 
     
-    if(nextElementIndex >= 0 && nextElementIndex < a.length) {
-        window.scrollTo({
-            top: document.getElementById(a[nextElementIndex].id).offsetTop,
-            left: 0,
-            behavior: 'smooth',
-        });
+//     if(nextElementIndex >= 0 && nextElementIndex < a.length) {
+//         window.scrollTo({
+//             top: document.getElementById(a[nextElementIndex].id).offsetTop,
+//             left: 0,
+//             behavior: 'smooth',
+//         });
 
-        currentScrollElementId.value = a[nextElementIndex].id;
-    }
-    isScrolling.value = false;
-}
+//         currentScrollElementId.value = a[nextElementIndex].id;
+//     }
+//     isScrolling.value = false;
+// }
 
 
 </script>
