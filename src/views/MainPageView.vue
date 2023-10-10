@@ -52,6 +52,8 @@
 
     </div>
 
+
+
 </template>
 
 
@@ -81,7 +83,7 @@ const startY = ref(0);
 onMounted(()=>{
     isOpen.value = false;
     fetchCardData();
-    // window.addEventListener('wheel', mainPageScrolling);
+    addSmoothScrolling();
 })
 
 const fetchCardData = async () =>{
@@ -120,53 +122,22 @@ const openSideBar = () => {
 
 const scrollToElement = (elementName) => {
     document.getElementById(elementName).scrollIntoView({ behavior: 'smooth' });
+    
 };
 
-
-// const mainPageScrolling = (e) => {
-//     console.log("ok");
-//     e.stopPropagation();
-//     if (isScrolling.value) {
-//         return;
-//     }
-//     isScrolling.value = true;
-
-//       let scrollY = window.scrollY
-//       if (scrollY > startY.value) {
-//         direction.value = 'down';
-//       } else {
-//         direction.value = 'up';
-//       }
-//       startY.value = scrollY;
-
-//     let a= document.getElementsByClassName('anchor-link');
-//     let nextElementIndex;
-//     for(let i = 0 ; i < a.length ; i++) {
-        
-
-//         if(a[i].id == currentScrollElementId.value)
-//         {
-//             if (direction.value == "down") nextElementIndex = i+1;
-//             else nextElementIndex = i-1;
-            
-//         }
-//     }
-
+const addSmoothScrolling = () =>{
+    const container = document.querySelector('.site-grid-layout');
     
+    container.addEventListener('wheel', (event) => {
+        event.preventDefault();
+        const delta = event.deltaY;
 
-    
-//     if(nextElementIndex >= 0 && nextElementIndex < a.length) {
-//         window.scrollTo({
-//             top: document.getElementById(a[nextElementIndex].id).offsetTop,
-//             left: 0,
-//             behavior: 'smooth',
-//         });
-
-//         currentScrollElementId.value = a[nextElementIndex].id;
-//     }
-//     isScrolling.value = false;
-// }
-
+        container.scrollBy({
+            top: delta,
+            behavior: 'smooth'
+        });
+    });
+}
 
 </script>
 
@@ -174,7 +145,9 @@ const scrollToElement = (elementName) => {
 
 <style>
 
-
+body{
+      overflow: hidden;
+}
 .site-grid-layout {
     display: grid;
     grid-template-areas:
@@ -183,8 +156,15 @@ const scrollToElement = (elementName) => {
         'footer footer footer footer footer footer';
     grid-auto-columns: minmax(100px, auto);
     gap: 0px;
-
     padding: 0;
+
+    height: 100vh;
+
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+
+
 }
 
 .site-grid-layout .grid-item {
@@ -212,6 +192,8 @@ const scrollToElement = (elementName) => {
     padding: 0 !important;
     font-size: 0;
     overflow: hidden;
+
+    scroll-snap-align: start;
 }
 
 .full-screen {
@@ -230,22 +212,30 @@ const scrollToElement = (elementName) => {
 .about-me-area {
     grid-area: about;
     grid-template-columns: auto !important;
+
+    scroll-snap-align: start;
 }
 
 .experience-area {
     grid-area: experience;
     display: flex;
     flex-direction: row;
+
+    scroll-snap-align: start;
 }
 
 .projects-area {
     grid-area: projects;
     display: flex;
     flex-direction: row;
+
+    scroll-snap-align: start;
 }
 
 .footer-area {
     grid-area: footer;
+
+    scroll-snap-align: start;
 }
 
 .display-grid {
