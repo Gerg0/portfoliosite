@@ -6,7 +6,7 @@
             </PopupMessage>
         </Transition>
     </div>
-    <div class="container">
+    <div class="contact-form-container">
         <div class="contact-info">
             <p>Ha oldalam felkeltette érdeklődését kérem küldjön e-mailt a tothgergo602@gmail.com címemre vagy használja
                 az emailküldöt!</p>
@@ -121,18 +121,18 @@ input[type=submit]:hover {
     background-color: orange;
 }
 
-.container {
+.contact-form-container {
     border-radius: 5px;
     padding: 20px;
     display: flex;
     flex: 1 1 0px;
     flex-direction: row;
     justify-content: space-between;
-    margin: auto;
+    /* margin: auto; */
 }
 
 .message-container {
-    margin: 5px;
+    /* margin: 5px; */
 }
 
 .error {
@@ -166,7 +166,6 @@ input[type=submit]:hover {
 }
 
 .contact-info {
-    margin-top: 10rem;
     text-align: start;
     width: 50%;
 }
@@ -176,14 +175,17 @@ input[type=submit]:hover {
 .contact-info p{
     margin-top: 50px;
 }
-@media only screen and (max-width: 400px) {
-    .container {
-        max-width: 100%;
+@media only screen and (max-width: 540px) {
+    .contact-form-container {
+        width: 100%;
         flex-direction: column;
+        font-size: 14px;
+        padding:10px;
     }
 
     .contact-form {
         width: 100%;
+        
     }
 
     .contact-info {
@@ -195,7 +197,7 @@ input[type=submit]:hover {
 
     input[type=submit] {
         width: fit-content;
-        font-size: 50px;
+        /* font-size: 50px; */
 
     }
 }</style>

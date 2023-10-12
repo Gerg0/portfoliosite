@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div id="intro" class="anchor-link intro-area grid-item full-screen">
+        <div id="intro" class="intro-area grid-item full-screen">
             <div class="intro-page-container">
                 <h1 class="name">Tóth Gergő</h1>
             </div>
@@ -23,10 +23,10 @@
             <div class="container">
                 <div class="content-grid-layout">
                     
-                    <div v-for="introduction in introductions" ref="about" id="about" class="anchor-link about-me-area grid-item full-screen display-grid">
+                    <div v-for="introduction in introductions" ref="about" id="about" class="about-me-area grid-item full-screen display-grid">
                         <CardItem :Model=introduction />
                     </div>
-                    <div id="experience" class="anchor-link experience-area grid-item full-screen display-grid">
+                    <div id="experience" class="experience-area grid-item full-screen display-grid">
                         <div v-for="experience in experiences">
                             <CardItem :Model="experience" />
                         </div>
@@ -35,7 +35,7 @@
                         </div>
 
                     </div>
-                    <div id="projects" class="anchor-link projects-area grid-item full-screen display-grid">
+                    <div id="projects" class="projects-area grid-item full-screen display-grid">
 
                         <CardItem v-for="project in projects" :Model="project" />
                         
@@ -46,7 +46,7 @@
             </div>
 
         </div>
-        <div  id="contact" class="anchor-link footer-area grid-item">
+        <div  id="contact" class="footer-area full-screen grid-item">
             <ContactForm/>
         </div>
 
@@ -155,10 +155,10 @@ body{
         'content content content content content content'
         'footer footer footer footer footer footer';
     grid-auto-columns: minmax(100px, auto);
-    gap: 0px;
+    /* gap: 30px; */
     padding: 0;
 
-    height: 100vh;
+    height: 100svh;
 
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
@@ -171,7 +171,7 @@ body{
     text-align: center;
     justify-content: center;
     padding: 20px 0;
-    font-size: 30px;
+    font-size:1.3rem;
 }
 
 .content-grid-layout {
@@ -233,8 +233,9 @@ body{
 }
 
 .footer-area {
+    display:flex;
     grid-area: footer;
-
+    align-items: end;
     scroll-snap-align: start;
 }
 
@@ -250,18 +251,14 @@ body{
     .container {
         width: auto;
     }
-    @media only screen and (max-width: 990px) {
-        .display-grid{
-            grid-template-columns: auto;
-        }
-    }
-
+   
     .intro-page-container{
     display: block;
     color:white;
     width:100%;
     height:inherit;
     padding: 30% 60% 70% 20%;
+    font-size: 30px;
 }
 
 .name{
@@ -393,10 +390,33 @@ body{
 }
 
 
-@media only screen and (max-width: 400px) {
-    .full-screen{
-        min-height: 170vh;
+@media only screen and (max-width: 540px) {
+    .intro-page-container{
+        font-size:20px;
+        padding: 60% 0% 70% 0%;
     }
 
+    .site-grid-layout {
+        grid-auto-columns: auto;
+    }
+
+    .footer-area {
+        margin-top: 10rem;
+        display: flex;
+        scroll-snap-align: end;
+    }
+    
 }
+
+@media only screen and (max-width: 990px) {
+
+    .site-grid-layout {
+        scroll-snap-type: none;
+        overflow-y: auto;
+    }
+    .display-grid{
+        grid-template-columns: auto;
+    }
+}
+
 </style>
