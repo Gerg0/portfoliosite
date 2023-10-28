@@ -1,8 +1,8 @@
 <template>
-    <div id="site-layout" class="site-grid-layout">
+    <div id="site-layout"  class="site-grid-layout">
         <div  class="sidebar">
             <SideBar @scrollToElement="scrollToElement" />
-            <div style="" class="open-close-btn">
+            <div  class="open-close-btn">
                 <a class="triggerbtn"  @click.prevent="openSideBar()">
                     <div id="nav-icon3">
                         <span></span>
@@ -14,8 +14,7 @@
             </div>
         </div>
 
-
-        <div class="intro-area grid-item full-screen">
+        <div id="intro" class="intro-area grid-item full-screen">
             <div class="intro-page-container">
                 <h1 class="name">Tóth Gergő</h1>
             </div>
@@ -23,7 +22,8 @@
         <div class="content-area">
             <div class="container">
                 <div class="content-grid-layout">
-                    <div v-for="introduction in introductions" id="about" class="about-me-area grid-item full-screen display-grid">
+                    
+                    <div v-for="introduction in introductions" ref="about" id="about" class="about-me-area grid-item full-screen display-grid">
                         <CardItem :Model=introduction />
                     </div>
                     <div id="experience" class="experience-area grid-item full-screen display-grid">
@@ -35,7 +35,7 @@
                         </div>
 
                     </div>
-                    <div  id="projects" class="projects-area grid-item full-screen display-grid">
+                    <div id="projects" class="projects-area grid-item full-screen display-grid">
 
                         <CardItem v-for="project in projects" :Model="project" />
                         
@@ -46,13 +46,13 @@
             </div>
 
         </div>
-        <div id="contact" class="footer-area grid-item">
-            <!-- <div id="contact" class="footer-area grid-item"> -->
+        <div  id="contact" class="footer-area full-screen grid-item">
             <ContactForm/>
-            <!-- </div> -->
         </div>
 
     </div>
+
+
 
 </template>
 
@@ -63,7 +63,8 @@ import SideBar from "@/components/Layout/SideBar.vue";
 import CardItem from "@/components/CardItem.vue";
 import ContactForm from "@/components/ContactForm.vue";
 import { onMounted, ref } from 'vue';
-import supabase from "../data/supabaseClient"
+import axios from 'axios'
+
 
 
 
@@ -72,27 +73,32 @@ const experiences = ref();
 const educations = ref();
 const projects = ref();
 
-const isOpen = ref(false)
+const isOpen = ref(false);
+const currentScrollElementId = ref("intro");
+const isScrolling = ref(false);
+
+const direction = ref("");
+const startY = ref(0);
 
 onMounted(()=>{
-    isOpen.value = false
+    isOpen.value = false;
     fetchCardData();
+    addSmoothScrolling();
 })
 
 const fetchCardData = async () =>{
-
-    const {data, error, status} = await supabase
-        .from("SiteContent")
-        .select(`*, TimelineData (*) `);
-
-    if (error && status !== 406) throw error;
-
-    if(data){
-        introductions.value = data.filter(obj => obj.contentType == "introduction");
-        experiences.value = data.filter(obj => obj.contentType == "experience");
-        educations.value = data.filter(obj => obj.contentType == "education");
-        projects.value = data.filter(obj => obj.contentType == "project");
-    }
+    axios(`${import.meta.env.VITE_BACKEND_API_URL}/api/getsitedata`).then((result) => {
+        if (result.error && result.status !== 406) throw result.error;
+        
+        if(result.data){
+            introductions.value = result.data.filter(obj => obj.contentType == "introduction");
+            experiences.value = result.data.filter(obj => obj.contentType == "experience");
+            educations.value = result.data.filter(obj => obj.contentType == "education");
+            projects.value = result.data.filter(obj => obj.contentType == "project");
+            }
+        }, (error) => {
+            console.log(error);
+    });
 }
 
 
@@ -105,8 +111,6 @@ const openSideBar = () => {
         document.getElementById("nav-icon3").classList.toggle("open");
         if (isOpen.value == false) {
             document.getElementById("sidebar").style.width = "100%";
-
-
             isOpen.value = true;
         }
         else{
@@ -118,60 +122,22 @@ const openSideBar = () => {
 
 const scrollToElement = (elementName) => {
     document.getElementById(elementName).scrollIntoView({ behavior: 'smooth' });
+    
 };
 
-// const Introduction = {
-//                 // description: Cards.value.description,
-//                 //description: "Frontend fejlesztő ként dolgozom 2020 március óta. Főként C#-ban fejlesztek .NET Core keretrendszerben Javascript-el és MSSQL adatbázissal kiegészítve. Főként weboldalak fejlesztésével foglalkozom de munkám során részt vettem asztali alkalmazások és szolgáltatások fejlesztésében is. Szabadidőmben jelenleg Vue.js-el foglalkozom.",
-//                 // text: "Valami szöveg! Valami szöveg! Valami szöveg! Valami szöveg! Valami szöveg! Valami szöveg! Valami szöveg! Valami szöveg! Valami szöveg! Valami szöveg! ",
-//                 description: Cards.value[0].description,
-//                 icon: "Profil-modified.png",
-//                 // icon: "logo.png",
-//                 isTimeline: false,
-//                 timelineData: [],
-//             }
-// const Experience = {
-//                 title: "Munkatapasztalataim",
-//                 icon: "workplace.jpg",
-//                 isTimeline: true,
-//                 timelineData: [
-//                     { date: "2020-", text: "Srs Informatika Kft. Frontend Webfejlesztő" },
-//                     { date: "2017-2020", text: "Rába Futómű Karbantartó mérnök" }
-//                 ],
-//             }
-// const Education = {
-//                 title: "Tanulmányaim",
-//                 icon: "education.jpg",
-//                 isTimeline: true,
-//                 timelineData: [
-//                     { date: "2018-2020", text: "Jedlik Ányos Gépipari és Informatikai Technikum" },
-//                     { date: "2013-2017", text: "Széchenyi István Egyetem Gépészmérnök szakirány" }
-//                 ],
-//             }
-// const ONTE = {
-//                 title: "Ópusztaszeri Nemzeti Történeti Emlékpark",
-//                 description: "Első feladatomként kaptam az ÓNTE webshop és admin tesztelését és a felmerülő hibák javítását, ez gyakran adatbázis táblák kiegészítésével és tárolteljárások átírásával járt. Maga a weboldal egy .NET feamework projekt MVC architektúrával. Átadás után ezt a weboldalt használtuk a legtöbb ügyfélnél és minden kinézettel kapcsolatos változtatás az én feladatom volt.",
-//                 link: "https://opusztaszer.jegy.eu/",
-//                 icon: "onte-1024x1024.jpg",
-//                 isTimeline: false,
-//                 timelineData: [],
-//             }
-// const Bahart = {
-//                 title: "Balatoni Hajózási Zrt.",
-//                 description: "Ez volt az első komolyabb projekt aminek egyedül csináltam meg a weboldalát. A projekt .NET core 3.1-keretrendszerben készült szintén MVC architektúrával.",
-//                 link: "https://jegy.bahart.hu/",
-//                 icon: "bahart.jpg",
-//                 isTimeline: false,
-//                 timelineData: [],
-//             }
-// const Hortobagy = {
-//                 title: "Hortobágyi Nemzeti Park",
-//                 description: "A legújabb nagy projekt amiben résztveszek itt az admin és a webshop elkészítése az én feladatom. Blazor és Tailwind css- keretrendszerekkel készült .NET core 6-tal ",
-//                 link: "https://jegy.hortobagyinfo.hu/",
-//                 icon: "hortobagy_logo.png",
-//                 isTimeline: false,
-//                 timelineData: [],
-//             }
+const addSmoothScrolling = () =>{
+    const container = document.querySelector('.site-grid-layout');
+    
+    container.addEventListener('wheel', (event) => {
+        event.preventDefault();
+        const delta = event.deltaY;
+
+        container.scrollBy({
+            top: delta,
+            behavior: 'smooth'
+        });
+    });
+}
 
 </script>
 
@@ -179,27 +145,33 @@ const scrollToElement = (elementName) => {
 
 <style>
 
-
+body{
+      overflow: hidden;
+}
 .site-grid-layout {
     display: grid;
     grid-template-areas:
-        /* 'header header header header header header' */
         'intro intro intro intro intro intro'
         'content content content content content content'
         'footer footer footer footer footer footer';
     grid-auto-columns: minmax(100px, auto);
-    gap: 0px;
-
-    /* background-color: #2196F3; */
+    /* gap: 30px; */
     padding: 0;
+
+    height: 100svh;
+
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+
+
 }
 
 .site-grid-layout .grid-item {
-    /* background-color: rgba(255, 255, 255, 0.8); */
     text-align: center;
     justify-content: center;
     padding: 20px 0;
-    font-size: 30px;
+    font-size:1.3rem;
 }
 
 .content-grid-layout {
@@ -220,11 +192,12 @@ const scrollToElement = (elementName) => {
     padding: 0 !important;
     font-size: 0;
     overflow: hidden;
+
+    scroll-snap-align: start;
 }
 
 .full-screen {
     min-height: 100svh;
-    /* min-height: -webkit-fill-available; */
     width: 100%;
 }
 
@@ -239,22 +212,31 @@ const scrollToElement = (elementName) => {
 .about-me-area {
     grid-area: about;
     grid-template-columns: auto !important;
+
+    scroll-snap-align: start;
 }
 
 .experience-area {
     grid-area: experience;
     display: flex;
     flex-direction: row;
+
+    scroll-snap-align: start;
 }
 
 .projects-area {
     grid-area: projects;
     display: flex;
     flex-direction: row;
+
+    scroll-snap-align: start;
 }
 
 .footer-area {
+    display:flex;
     grid-area: footer;
+    align-items: end;
+    scroll-snap-align: start;
 }
 
 .display-grid {
@@ -269,19 +251,14 @@ const scrollToElement = (elementName) => {
     .container {
         width: auto;
     }
-    @media only screen and (max-width: 990px) {
-        .display-grid{
-            grid-template-columns: auto;
-        }
-    }
-
+   
     .intro-page-container{
     display: block;
-    /* background-color: navy; */
     color:white;
     width:100%;
     height:inherit;
     padding: 30% 60% 70% 20%;
+    font-size: 30px;
 }
 
 .name{
@@ -295,9 +272,7 @@ const scrollToElement = (elementName) => {
     top: 0;
     margin-left: auto;
     width:auto;
-    /* transition: 1s; */
 }
-/* The button used to open the sidebar */
 .triggerbtn {
   font-size: 50px;
   cursor: pointer;
@@ -309,8 +284,6 @@ const scrollToElement = (elementName) => {
   justify-content:center;
   align-items:center;
   margin-top: 60px;
-  /* float:right; */
-  /* grid-area: open-close-btn; */
   height: 5em;
   width: 5em;
   border-radius: 0px 10px 10px 0px;
@@ -404,7 +377,6 @@ const scrollToElement = (elementName) => {
 }
 
 .btn {
-  /* background-color: #4CAF50; Green */
   background-color: orange;
     color: white;
     padding: 12px 20px;
@@ -418,10 +390,33 @@ const scrollToElement = (elementName) => {
 }
 
 
-@media only screen and (max-width: 400px) {
-    .full-screen{
-        min-height: 170vh;
+@media only screen and (max-width: 540px) {
+    .intro-page-container{
+        font-size:20px;
+        padding: 60% 0% 70% 0%;
     }
 
+    .site-grid-layout {
+        grid-auto-columns: auto;
+    }
+
+    .footer-area {
+        margin-top: 10rem;
+        display: flex;
+        scroll-snap-align: end;
+    }
+    
 }
+
+@media only screen and (max-width: 990px) {
+
+    .site-grid-layout {
+        scroll-snap-type: none;
+        overflow-y: auto;
+    }
+    .display-grid{
+        grid-template-columns: auto;
+    }
+}
+
 </style>

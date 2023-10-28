@@ -6,7 +6,7 @@
             </PopupMessage>
         </Transition>
     </div>
-    <div class="container">
+    <div class="contact-form-container">
         <div class="contact-info">
             <p>Ha oldalam felkeltette érdeklődését kérem küldjön e-mailt a tothgergo602@gmail.com címemre vagy használja
                 az emailküldöt!</p>
@@ -44,10 +44,9 @@
     </div>
 </template>
 <script setup>
-// import emailjs from '@emailjs/browser';
-import emailjs from 'emailjs-com';
+
+import axios from 'axios'
 import { ref } from 'vue';
-import config from '@/config.json';
 import PopupMessage from '@/components/PopupMessage.vue'
 import CardItem from "@/components/CardItem.vue";
 const popupTrigger = ref(false)
@@ -69,28 +68,16 @@ const reset = () => {
         form.value.from_email = "",
         form.value.message = ""
 }
-
-
-
-const sendEmail = (e) => {
-    form.value.error_message = "";
+const sendEmail = () => {
+    
     form.value.user_message = "";
-
-    emailjs.sendForm(config.service_id, config.template_name, e.target, config.public_key, {
-        from_name: form.value.from_name,
-        from_email: form.value.from_email,
-        message: form.value.message
-    })
-        .then((result) => {
-            console.log('SUCCESS!', result.text);
+    axios(`${import.meta.env.VITE_BACKEND_API_URL}/api/sendemail?fromname=${form.value.from_name}&fromemail=${form.value.from_email}&message=${form.value.message}`).then((result) => {
             reset();
             form.value.user_message = "Üzenet sikeresen elküldve!";
             togglePopup();
-            console.log(form.value.user_message);
 
         }, (error) => {
-            console.log('FAILED...', error.text);
-            form.value.error_message = "Valami hiba történt!";
+            form.value.user_message = "Valami hiba történt!";
             togglePopup();
         });
 }
@@ -134,20 +121,18 @@ input[type=submit]:hover {
     background-color: orange;
 }
 
-.container {
+.contact-form-container {
     border-radius: 5px;
     padding: 20px;
-    /* max-width: 50%; */
     display: flex;
     flex: 1 1 0px;
     flex-direction: row;
     justify-content: space-between;
-    /*  */
-    margin: auto;
+    /* margin: auto; */
 }
 
 .message-container {
-    margin: 5px;
+    /* margin: 5px; */
 }
 
 .error {
@@ -181,7 +166,6 @@ input[type=submit]:hover {
 }
 
 .contact-info {
-    margin-top: 10rem;
     text-align: start;
     width: 50%;
 }
@@ -191,14 +175,17 @@ input[type=submit]:hover {
 .contact-info p{
     margin-top: 50px;
 }
-@media only screen and (max-width: 400px) {
-    .container {
-        max-width: 100%;
+@media only screen and (max-width: 540px) {
+    .contact-form-container {
+        width: 100%;
         flex-direction: column;
+        font-size: 14px;
+        padding:10px;
     }
 
     .contact-form {
         width: 100%;
+        
     }
 
     .contact-info {
@@ -210,7 +197,7 @@ input[type=submit]:hover {
 
     input[type=submit] {
         width: fit-content;
-        font-size: 50px;
+        /* font-size: 50px; */
 
     }
 }</style>

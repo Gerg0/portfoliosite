@@ -2,16 +2,12 @@
 <div class="grid-card">
 
     <div class="item two">
-        <!-- <div class="grid-content">
-            <div class="item text">Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!Valami szöveg valami nagyon menő dologról!</div>
-        </div> -->
     </div>
     <div class="item text">
-        <!-- {{ Model.text }} -->
         <div v-if="Model.title" class="title">
             <h3>{{Model.title}}</h3>
         </div>
-        <div v-if="Model.description">
+        <div  v-if="Model.description">
             {{Model.description}}
             <div v-if="Model.link" class="link">
                 <a :href="Model.link" target="_blank">Link az oldalhoz.</a>
@@ -21,7 +17,7 @@
             <TimeLine :timeLineData="Model.TimelineData"/>
         </div>
     </div>
-    <div class="item one rounded-circle"><img :src="getImgUrl(Model.icon)"/></div>
+    <div class="item one"><img :src="getImgUrl(Model.icon)"/></div>
 </div>
 
 </template>
@@ -33,8 +29,6 @@ const props = defineProps({
 })
 
 const getImgUrl = (icon) => {
-    // let images = require.context('../assets/', false);
-    // return images('./' + icon);
     return './'+icon;
   }
 
@@ -49,9 +43,7 @@ const getImgUrl = (icon) => {
     grid-template-rows: 1fr 1fr minmax(30px, auto);
     padding: 10px;
     overflow:hidden;
-    /* border-radius: 90px; */
     max-width:600px;
-    /* margin:auto; */
     align-self: start;
 }
 
@@ -94,5 +86,27 @@ const getImgUrl = (icon) => {
 }
 .link{
     margin-top: 1rem;
+}
+@media only screen and (max-width: 540px) {
+    .grid-card{
+        grid-template-columns: auto minmax(240px, auto) auto;
+        grid-template-rows: 1fr 1fr minmax(15px, auto);
+        width: 100%;
+        font-size: 14px;
+        padding:0px;
+        margin-top:10px;
+    }
+    .item{
+        font-size: 16px;
+    }
+    .item.one img{
+        width: 12rem;
+    }
+    .item.two {
+        border-radius: 50px;
+    }
+    .item.text{
+        margin:1rem;
+    }
 }
 </style>
