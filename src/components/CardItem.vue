@@ -91,7 +91,8 @@ const getImgUrl = (icon) => {
     .grid-card{
         grid-template-columns: auto minmax(240px, auto) auto;
         grid-template-rows: 1fr 1fr minmax(15px, auto);
-        width: 100%;
+        width: 95%;
+        margin: auto;
         font-size: 14px;
         padding:0px;
         margin-top:10px;

@@ -170,7 +170,6 @@ body{
 .site-grid-layout .grid-item {
     text-align: center;
     justify-content: center;
-    padding: 20px 0;
     font-size:1.3rem;
 }
 
